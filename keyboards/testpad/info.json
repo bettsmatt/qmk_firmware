@@ -1,0 +1,15 @@
+{
+    "keyboard_name": "dumbpad",
+    "url": "",
+    "maintainer": "qmk",
+    "width": 5,
+    "height": 4,
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"label":"7", "x":0, "y":0},
+                {"label":"8", "x":1, "y":0}
+            ]
+        }
+    }
+}
