@@ -19,17 +19,19 @@
 #define _SUB  1
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BASE] = LAYOUT(KC_A, RGB_TOG),
-  [_SUB] = LAYOUT(_______, _______),
+  [_BASE] = LAYOUT(
+    RGB_TOG, KC_2, KC_3, RGB_TOG,
+    KC_5, KC_6, KC_7, KC_8,
+    KC_A, KC_B, KC_C, KC_D,
+    KC_E, KC_F, KC_G, KC_H
+  )
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // If console is enabled, it will print the matrix position and status of each key pressed
-/*
-#ifdef CONSOLE_ENABLE
+  #ifdef CONSOLE_ENABLE
     uprintf("KL: kc: %u, col: %u, row: %u, pressed: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed);
-#endif
-*/
+  #endif
   return true;
 }
 
@@ -62,28 +64,34 @@ void encoder_update_user(uint8_t index, bool clockwise) {
    *    other layers:
    *       CW: = (equals/plus - increase slider in Adobe products)
    *      CCW: - (minus/underscore - decrease slider in adobe products)
-   */
-  if (index == 0) {
+  */
+
+    #ifdef CONSOLE_ENABLE
+      uprintf("clockwise: %u, index: %u\n", clockwise, index);
+    #endif
+
     switch (biton32(layer_state)) {
       case _BASE:
         // main layer - move mouse right (CW) and left (CCW)
-        if (clockwise) {
-          // tap_code(RGB_MOD);
+        if (clockwise && index == 0) {
+          // tap_code(RGB_MODE_FORWARD);
+          // register_code(RGB_MOD);
           rgblight_step();
-        } else {
-          // tap_code(RGB_RMOD);
-          rgblight_step_reverse();
-        }
-        break;
 
-      default:
-        // other layers - =/+ (quals/plus) (CW) and -/_ (minus/underscore) (CCW)
-        if (clockwise) {
-          tap_code(KC_EQL);
-        } else {
-          tap_code(KC_MINS);
+        } else if (!clockwise && index == 0){
+          // register_code(RGB_RMOD);
+          rgblight_step_reverse();
+
+          // tap_code(RGB_MODE_REVERSE);
+        } else if (clockwise && index == 1){
+          // register_code(RGB_VAI);
+          // unregister_code(RGB_VAI);
+          rgblight_increase_hue();
+        } else if (!clockwise && index == 1){
+          // register_code(RGB_VAD);
+          rgblight_decrease_hue();
+          // unregister_code(RGB_VAD);
         }
         break;
-    }
   }
 }
