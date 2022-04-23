@@ -1,10 +1,10 @@
 /*
-Copyright 2019 imchipwood
+Copyright 2012 Jun Wako <wakojun@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
-(at your opion) any later version.
+(at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,18 +15,24 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+// qmk compile -kb handwired/ortho5x12 -km default
+
+#ifndef CONFIG_H
+#define CONFIG_H
 
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0xDEAF
-#define PRODUCT_ID      0x0913
+#define VENDOR_ID       0xBB80
+#define PRODUCT_ID      0x050D
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    imchipwood
-#define PRODUCT         dumbpad
-#define DESCRIPTION     4x4 macro/numpad with rotary encoder
+#define MANUFACTURER    Hexwire
+#define PRODUCT         Ortho 5x12
+#define DESCRIPTION     Handwired 5x12 ortholinear keyboard
 
+/* key matrix size */
+#define MATRIX_ROWS 5
+#define MATRIX_COLS 12
 
 /*
  * Keyboard Matrix Assignments
@@ -38,43 +44,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
 */
+#define MATRIX_ROW_PINS { D3, D2, B4, B5, B2 }
+#define MATRIX_COL_PINS { F4, F5, F6, F7, B1, B3, D1, D0, D4, C6, D7, E6 }
 
-// Black, D7, R1
-// Purple, B5, R2
-// Blue, B6, R3
-// Green, B2, R4
-
-// White, E6, C1
-// Grey, B4, C2
-// Yello, B3, C3
-// Orange, B1, C4,
-
-// Brown, C6, E1
-// Red, D4, E1
-// Red, F7, E2
-// Brown, F6, E2
-
-#define MATRIX_ROWS 4
-#define MATRIX_COLS 4
-#define MATRIX_ROW_PINS { D7, B5, B6, B2}
-#define MATRIX_COL_PINS { E6, B4, B3, B1}
 #define UNUSED_PINS
 
+/* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
-
-/* Rotary encoders */
-#define ENCODERS_PAD_A { D4, F6 }
-#define ENCODERS_PAD_B { C6, F7 }
-#define ENCODER_RESOLUTION 4
-
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
 
-#define RGB_DI_PIN F4
-#define RGBLED_NUM 24
+// Should override get_auto_shifted_key at some point to only auto shift the keys i want.
+#define AUTO_SHIFT_TIMEOUT 150
+#define NO_AUTO_SHIFT_SPECIAL
+#define NO_AUTO_SHIFT_ALPHA
 
-#define RGBLIGHT_ANIMATIONS
-#define RGBLIGHT_HUE_STEP 8
-#define RGBLIGHT_SAT_STEP 8
-#define RGBLIGHT_VAL_STEP 8
+#define TAPPING_TERM 175
+
+#endif
