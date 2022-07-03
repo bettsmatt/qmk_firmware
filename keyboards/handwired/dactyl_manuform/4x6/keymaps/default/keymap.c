@@ -3,11 +3,11 @@
 
 #define _BASE 0
 #define _LYR 1
-#define _MODS 3
+#define _NUM 2
 #define _FN 4
 
 enum {
-    KC_LAYR = SAFE_RANGE,
+    KC_LYR = SAFE_RANGE,
     KC_HRB,
     KC_HSB,
     KC_HCB,
@@ -18,6 +18,7 @@ enum {
 // Releaseing the key you entered the layer with while holding down the other
 // key will not keep you in the layer.
 static uint16_t layer_keys_active = 0;
+
 
 // One Shot Modifiers.
 #define KC_OSMC OSM(MOD_LCTL)
@@ -36,6 +37,7 @@ static uint16_t hsb_timer = 0;
 static bool is_hcb_active = false;
 static uint16_t hcb_timer = 0;
 
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_BASE] = LAYOUT( \
@@ -48,20 +50,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
                               XXXXXXX,   XXXXXXX,                                                          XXXXXXX,   XXXXXXX,
 //                        +----------+----------+                                                      +----------+----------+
-                                         KC_LALT,  KC_SPACE,   KC_LGUI,              MO(_NUM),  KC_LSFT,  MO(_LYR),
+                                         KC_LALT,  KC_SPACE,   XXXXXXX,              XXXXXXX,   KC_LSFT,  MO(_LYR),
 //                                   +----------+----------+----------+          +----------+----------+----------+
-                                                    XXXXXXX,   XXXXXXX,              XXXXXXX,   XXXXXXX
+                                                    KC_LGUI,   XXXXXXX,              XXXXXXX,   MO(_NUM)
 //                                              +----------+----------+          +----------+----------+
 ),
 
 
 [_LYR] = LAYOUT(
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
-        _______,   XXXXXXX,   KC_LPRN,    KC_GRV,   KC_RPRN,   XXXXXXX,              KC_PGUP,   KC_BSPC,     KC_UP,    KC_DEL    KC_PGDN,   XXXXXXX,
+        _______,   KC_LABK,   KC_LPRN,    KC_GRV,   KC_RPRN,   KC_RABK,              KC_PGUP,   KC_BSPC,     KC_UP,    KC_DEL,   KC_PGDN,   XXXXXXX,
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
-        _______,   XXXXXXX,   KC_LBRC,   KC_UNDS,   KC_RBRC,   KC_BSLS,              KC_HOME,   KC_LEFT,   KC_DOWN,   KC_RGHT,    KC_END,   XXXXXXX,
+        _______,S(KC_LBRC),   KC_LBRC,   KC_UNDS,   KC_RBRC,S(KC_RBRC),              KC_HOME,   KC_LEFT,   KC_DOWN,   KC_RGHT,    KC_END,   XXXXXXX,
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
-        _______,   XXXXXXX,   KC_PLUS,   KC_MINS,    KC_EQL,   XXXXXXX,              KC_CAPS,   KC_LSFT,   KC_LCTL,   XXXXXXX,   XXXXXXX,   MO(_FN),
+        _______,   XXXXXXX,   KC_PLUS,   KC_MINS,    KC_EQL,   KC_BSLS,              KC_CAPS,   KC_LSFT,   KC_LCTL,   KC_LALT,   MO(_FN),   XXXXXXX,
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
                               XXXXXXX,   XXXXXXX,                                                          XXXXXXX,   XXXXXXX,
 //                        +----------+----------+                                                      +----------+----------+
@@ -78,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
         _______,   XXXXXXX,      KC_4,      KC_5,      KC_6,      KC_0,              XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
-        _______,   XXXXXXX,      KC_7,      KC_8,      KC_9,    KC_DOT,              XXXXXXX,   KC_LSFT,   KC_LCTL,   XXXXXXX,   XXXXXXX,   XXXXXXX,
+        _______,   XXXXXXX,      KC_7,      KC_8,      KC_9,    KC_DOT,              XXXXXXX,   KC_LSFT,   KC_LCTL,   KC_LALT,   MO(_FN),   XXXXXXX,
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
                               XXXXXXX,   XXXXXXX,                                                          XXXXXXX,   XXXXXXX,
 //                        +----------+----------+                                                      +----------+----------+
@@ -91,11 +93,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_FN] = LAYOUT(
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
-       XXXXXXX,   XXXXXXX,      KC_F1,     KC_F2,     KC_F3,    KC_F10,                RESET,   LCG_SWP,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
+       XXXXXXX,   XXXXXXX,      KC_F1,     KC_F2,     KC_F3,    KC_F10,                RESET,   CG_TOGG,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
        XXXXXXX,   XXXXXXX,      KC_F4,     KC_F5,     KC_F6,    KC_F11,              XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
-       XXXXXXX,   XXXXXXX,      KC_F7,     KC_F8,     KC_F9,    KC_F12,              XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
+       XXXXXXX,   XXXXXXX,      KC_F7,     KC_F8,     KC_F9,    KC_F12,              XXXXXXX,   XXXXXXX,   KC_LSFT,   KC_LCTL,   XXXXXXX,   XXXXXXX,
 //  |----------+----------+----------+----------+----------+----------+          +----------+----------+----------+----------+----------+----------|
                               XXXXXXX,   XXXXXXX,                                                          XXXXXXX,   XXXXXXX,
 //                        +----------+----------+                                                      +----------+----------+
@@ -117,7 +119,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
 
-        case KC_LAYR:
+        case KC_LYR:
 
             if (record->event.pressed) {
                 layer_keys_active += 1;

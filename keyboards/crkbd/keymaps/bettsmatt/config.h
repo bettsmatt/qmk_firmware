@@ -25,15 +25,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Select hand configuration */
 
 #define MASTER_LEFT
-// #define MASTER_RIGHT
-// #define EE_HANDS
-
-#define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
 
 #define USE_SERIAL_PD2
 
-#define TAPPING_TERM 150
-#define LEADER_TIMEOUT 300
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 #ifdef MOUSEKEY_ENABLE
     #define MOUSEKEY_DELAY 0
@@ -54,3 +49,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_SAT_STEP 17
     #define RGBLIGHT_VAL_STEP 17
 #endif
+
