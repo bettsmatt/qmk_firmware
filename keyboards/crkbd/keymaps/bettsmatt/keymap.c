@@ -60,9 +60,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Symbols and Navigation
   [_NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC, KC_LABK, KC_LPRN,  KC_GRV, KC_RPRN, KC_RABK,                      KC_PGUP, KC_BSPC,   KC_UP,  KC_DEL, KC_PGDN, _______,
+       KC_ESC, KC_LCBR, KC_LBRC,  KC_GRV, KC_RBRC, KC_RCBR,                      KC_PGUP, KC_BSPC,   KC_UP,  KC_DEL, KC_PGDN, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_LCBR, KC_LBRC, KC_UNDS, KC_RBRC, KC_RCBR,                      KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT,  KC_END, _______,
+      _______, KC_LABK, KC_LPRN, KC_UNDS, KC_RPRN, KC_RABK,                      KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT,  KC_END, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, KC_PIPE, KC_PLUS, KC_MINS,  KC_EQL, KC_BSLS,                      XXXXXXX, C(KC_X), C(KC_C), C(KC_V), KC_RGUI, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
