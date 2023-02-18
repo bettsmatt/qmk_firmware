@@ -7,12 +7,14 @@
 #define _OSX 2
 #define _NAV 3
 #define _NUM 4
+#define _NUMX 5
 #define _FN 6
+#define _FNX 7
 
 #define MO_NAV MO(_NAV)
 #define MO_NUM MO(_NUM)
+#define MO_NUMX MO(_NUMX)
 #define TG_OSX TG(_OSX)
-#define MO_FN MO(_FN)
 
 #define DF_COL DF(_COLMAC)
 #define DF_QUE DF(_QUERTY)
@@ -23,12 +25,30 @@
 #define KC_SBSC RSFT_T(KC_BSPC)
 #define KC_SDEL RSFT_T(KC_DEL)
 
-#define G___ G(_______)
-#define C___ C(_______)
 
+enum {
+    CSF,
+    CSV,
+    CSP,
+    GSF,
+    GSV,
+    GSP,
+};
+
+// Tap Dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+
+    [CSF] = ACTION_TAP_DANCE_DOUBLE(C(KC_F), C(S(KC_F))),
+    [CSV] = ACTION_TAP_DANCE_DOUBLE(C(KC_V), C(S(KC_V))),
+    [CSP] = ACTION_TAP_DANCE_DOUBLE(C(KC_P), C(S(KC_P))),
+
+    [GSF] = ACTION_TAP_DANCE_DOUBLE(G(KC_F), G(S(KC_F))),
+    [GSV] = ACTION_TAP_DANCE_DOUBLE(G(KC_V), G(S(KC_V))),
+    [GSP] = ACTION_TAP_DANCE_DOUBLE(G(KC_P), G(S(KC_P))),
+};
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  // Base - Default
+  // Base - QUERTY
   [_QUERTY] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
@@ -37,11 +57,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LALT, MO_NUM,  KC_SPC,    KC_SBSC,  MO_NAV, KC_LGUI
+                                          KC_LALT, MO_NUM,  KC_SPC,    KC_RSFT,  MO_NAV, KC_LGUI
                                       //'--------------------------'  '--------------------------'
   ),
 
 
+  // Base - COLMAC
   [_COLMAC] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
@@ -50,10 +71,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_K,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LALT,  MO_NUM,  KC_SPC,    KC_SBSC,  MO_NAV, KC_LGUI
+                                          KC_LALT,  MO_NUM,  KC_SPC,    KC_RSFT,  MO_NAV, KC_LGUI
                                       //'--------------------------'  '--------------------------'
   ),
-    // Numbers
+
+  // Swaps CTRL and GUI modifiers when using OSX (swaps num layer to one with GUI shortcuts).
   [_OSX] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
@@ -62,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LGUI, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, KC_LCTL
+                                          _______, MO_NUMX, _______,    _______, _______, KC_LCTL
                                       //'--------------------------'  '--------------------------'
   ),
 
@@ -70,33 +92,57 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Numbers
   [_NUM] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC, G(KC_Q), G(KC_W), G(KC_F), G(KC_P), G(KC_G),                      XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX, _______,
+       KC_ESC, XXXXXXX, XXXXXXX, TD(CSF), TD(CSP), C(KC_G),                      XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, G(KC_A), G(KC_R), G(KC_S), G(KC_T), G(KC_D),                      XXXXXXX,    KC_4,    KC_5,    KC_6,    KC_0, _______,
+      _______, C(KC_A), C(KC_R), C(KC_S), C(KC_T), C(KC_D),                      XXXXXXX,    KC_4,    KC_5,    KC_6,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, G(KC_Z), G(KC_X), G(KC_C), G(KC_V), G(KC_B),                      XXXXXXX,    KC_7,    KC_8,    KC_9, XXXXXXX, _______,
+      _______, C(KC_Z), C(KC_X), C(KC_C), TD(CSV), C(KC_B),                      XXXXXXX,    KC_7,    KC_8,    KC_9, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,     KC_SDEL, _______, _______
+                                          _______, _______, _______,     _______, _______, _______
                                       //'--------------------------'  '--------------------------'
   ),
 
+    // Numbers for OSX.
+  [_NUMX] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+       KC_ESC, XXXXXXX, XXXXXXX, TD(GSF), TD(GSP), G(KC_G),                      XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, G(KC_A), G(KC_R), G(KC_S), G(KC_T), G(KC_D),                      XXXXXXX,    KC_4,    KC_5,    KC_6,    KC_0, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, G(KC_Z), G(KC_X), G(KC_C), TD(GSV), G(KC_B),                      XXXXXXX,    KC_7,    KC_8,    KC_9, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______, _______,     _______, _______, _______
+                                      //'--------------------------'  '--------------------------'
+  ),
 
   // Symbols and Navigation
   [_NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC, KC_PIPE, KC_LBRC,  KC_GRV, KC_RBRC, KC_BSLS,                      KC_PGUP, KC_BSPC,   KC_UP,  KC_DEL, KC_PGDN, _______,
+       KC_ESC, KC_PIPE, KC_LBRC,  KC_GRV, KC_RBRC, KC_BSLS,                       KC_ESC, KC_BSPC,   KC_UP,  KC_DEL, KC_PGUP, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_LCBR, KC_LPRN, KC_UNDS, KC_RPRN, KC_RCBR,                      XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, _______,
+      _______, KC_LCBR, KC_LPRN, KC_UNDS, KC_RPRN, KC_RCBR,                       KC_TAB, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_BSLS, KC_PLUS, KC_MINS,  KC_EQL, XXXXXXX,                      XXXXXXX, KC_HOME, XXXXXXX,  KC_END, XXXXXXX, _______,
+      _______, XXXXXXX, KC_PLUS, KC_MINS,  KC_EQL, XXXXXXX,                      XXXXXXX, KC_HOME,  KC_ENT,  KC_END, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //'--------------------------'  '--------------------------'
   ),
 
-
-  // Function and Adjust
+  // Function.
   [_FN] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       DF_QUE, KC_BSPC, XXXXXXX,  KC_DEL, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,                       DF_COL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______,  KC_F11,  KC_F12,  KC_INS, KC_CAPS, XXXXXXX,                       TG_OSX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______, _______,   _______, _______, _______
+                                      //'--------------------------'  '--------------------------'
+  ),
+
+    // Function for OSX.
+  [_FNX] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       DF_QUE, KC_BSPC, XXXXXXX,  KC_DEL, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -110,8 +156,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-
 layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _NAV, _NUM, _FN);
+  state = update_tri_layer_state(state, _NAV, _NUM, _FN);
+  state = update_tri_layer_state(state, _NAV, _NUMX, _FNX);
+  return state;
 }
+
 
