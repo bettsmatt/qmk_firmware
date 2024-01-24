@@ -1,5 +1,17 @@
 {
-  "keyboard_name": "splayed36 rev. 1",
+  "keyboard_name": "Corne",
+  "manufacturer": "foostan",
   "url": "",
-  "maintainer": "qmk"
+  "maintainer": "qmk",
+  "usb": {
+      "vid": "0x4653",
+      "pid": "0x0001",
+      "device_version": "0.0.1"
+  },
+  "diode_direction": "COL2ROW",
+  "split": {
+      "enabled": true,
+      "soft_serial_pin": "D0"
+  },
+  "processor": "atmega32u4"
 }

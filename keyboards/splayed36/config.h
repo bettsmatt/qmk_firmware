@@ -18,19 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID    0x4653
-#define PRODUCT_ID   0x0001
-#define DEVICE_VER   0x0001
-#define MANUFACTURER foostand
-#define PRODUCT      Corne
-
 /* key matrix size */
 // Rows are doubled-up
 #define MATRIX_ROWS  8
 #define MATRIX_COLS  5
 
-// Left
+// Lefttstrsatrstrsrstarstsssssssss
 #define MATRIX_ROW_PINS { D7, E6, B4, B5 }
 #define MATRIX_COL_PINS { F7, B1, B3, B2, B6 }
 
