@@ -1,15 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include "config_common.h"
-
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xBB80
-#define PRODUCT_ID      0x050D
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    Hexwire
-#define PRODUCT         KB34
-
 #define MATRIX_ROWS 4
 #define MATRIX_COLS 10
 

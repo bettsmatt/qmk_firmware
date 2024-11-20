@@ -39,22 +39,22 @@ enum {
 // . as sym
 // Or I might be able to move some of the brackets onto the alt tab or crtl tab layers.
 // Also need to combine mod layer and tap layer functionality.
-enum {
-    SFT_F,
-    SFT_P,
-    SFT_V,
-};
+// enum {
+//     SFT_F,
+//     SFT_P,
+//     SFT_V,
+// };
 
 // Tap Dance definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [SFT_F]  = ACTION_TAP_DANCE_DOUBLE(KC_F, S(KC_F)),
-    [SFT_P]  = ACTION_TAP_DANCE_DOUBLE(KC_P, S(KC_P)),
-    [SFT_V]  = ACTION_TAP_DANCE_DOUBLE(KC_V, S(KC_V))
-};
+// qk_tap_dance_action_t tap_dance_actions[] = {
+//     [SFT_F]  = ACTION_TAP_DANCE_DOUBLE(KC_F, S(KC_F)),
+//     [SFT_P]  = ACTION_TAP_DANCE_DOUBLE(KC_P, S(KC_P)),
+//     [SFT_V]  = ACTION_TAP_DANCE_DOUBLE(KC_V, S(KC_V))
+// };
 
-#define KC_SF TD(SFT_F)
-#define KC_SP TD(SFT_P)
-#define KC_SV TD(SFT_V)
+// #define KC_SF TD(SFT_F)
+// #define KC_SP TD(SFT_P)
+// #define KC_SV TD(SFT_V)
 #define KC_STAB S(KC_TAB)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -75,11 +75,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Allows for one handed copy / paste.
   [_SHORT] = LAYOUT(
   //,--------------------------------------------------------------------------------------------------|
-         KC_Q,    KC_W,   KC_SF,   KC_SP,    KC_G,             KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,
+         KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,             KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------,--------,--------+--------+--------+--------|
          KC_A,    KC_R,    KC_S,    KC_T,    KC_D,             KC_H,    KC_N,    KC_E,    KC_I,    KC_O,
   //|--------+--------+--------+--------+--------+--------,--------,--------+--------+--------+--------|
-         KC_Z,    KC_X,    KC_C,   KC_SV,    KC_B,             KC_K,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
+         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,             KC_K,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
   //|--------+--------+--------+--------+--------+--------,--------,--------+--------+--------+--------|
                                  _______, _______,          _______, _______
   //                           |--------+--------+--------+--------+--------|
@@ -88,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Navigation with mods and symbols.
   [_NAV] = LAYOUT(
   //,--------------------------------------------------------------------------------------------------|
-      KC_TILD, KC_QUOT,  KC_DQT,  KC_GRV, XXXXXXX,           KC_ESC, KC_BSPC,   KC_UP,  KC_DEL, CAPSWRD,
+      KC_TILD, KC_QUOT,  KC_DQT,  KC_GRV, XXXXXXX,           KC_ESC, KC_BSPC,   KC_UP,  KC_DEL, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------,--------,--------+--------+--------+--------|
       KC_OGUI, KC_OALT, KC_OCTL, KC_OSFT, KC_UNDS,           KC_TAB, KC_LEFT, KC_DOWN, KC_RGHT, KC_STAB,
   //|--------+--------+--------+--------+--------+--------,--------,--------+--------+--------+--------|
@@ -98,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                           |--------+--------+--------+--------+--------|
   ),
 
-  // Numbers and Tab/
+  // Numbers and Tab
   // Would be good to have the nav mod like in alt tab held down for a limit or until you loose the layer.
   [_NUM] = LAYOUT(
   //,--------------------------------------------------------------------------------------------------|
